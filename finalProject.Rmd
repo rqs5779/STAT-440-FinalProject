@@ -1,0 +1,42 @@
+---
+title: "final_project"
+author: "Ruimeng Shao"
+date: "5/2/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+df = read.csv("/Users/raymond/Library/CloudStorage/OneDrive-Personal/Windows_Homework/STAT-440/Project/data")
+# mean PM2.5 for pre-lockdown
+mean_pre = 286
+X = df$city
+n = X.length
+reps<-10000
+X_sim<-matrix(rbinom(n*reps,size=1,p=p0),nrow=reps)
+phat_sim<-rowMeans(X_sim)
+# Visualize simulations
+hist(phat_sim,prob=TRUE,breaks=30)
+dens_est<-density(phat_sim, bw="nrd")
+points(dens_est$x,dens_est$y,type="l",col="blue")
+abline(v=phat,col="red",lty=2)
+test_stat<-(phat-p0)^2
+test_sim<-(phat_sim-p0)^2
+mean(test_sim >= test_stat)
+prop.test(sum(X),n=n,p=p0,alternative="two.sided")
+t.test(X,mu=p0,alternative="two.sided")
+binom.test(sum(X),n=n,p=p0,alternative="two.sided")
+MC <- function(n){
+  k <- 0
+  x<- runif(n, 0, 1)
+  for (i in 1:n){
+    if (y[i] < f(x[i]))
+      k <- k+1
+  }
+  k/n
+}
+result <- MC(10000)
+```
